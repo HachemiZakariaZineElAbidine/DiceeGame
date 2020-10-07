@@ -16,9 +16,22 @@ class DicePage extends StatefulWidget {
 }
 
 class _State extends State<DicePage> {
-  @override
-  int Ldice = 1;
+  int Ldice = 1;//always declare before override
   int Rdice = 6;
+  
+  void _resetDice(){   //a privte function
+    setState(() {
+                Ldice = 1;
+                Rdice = 6;
+              });
+  }
+  void _rollDice(){   //a privte function
+      setState(() {
+            Ldice = Random().nextInt(6) + 1;
+            Rdice = Random().nextInt(6) + 1;
+          });
+  }
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -26,10 +39,7 @@ class _State extends State<DicePage> {
           builder: (BuildContext context) {
             return IconButton(
               icon: const Icon(Icons.games),
-              onPressed: () { setState(() {
-                Ldice = 1;
-                Rdice = 6;
-              }); },
+              onPressed: _resetDice,//for a cleaner code
             );
           },
         ),
@@ -64,12 +74,7 @@ class _State extends State<DicePage> {
       ),
       backgroundColor: Colors.blueGrey[900],
       floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {
-          setState(() {
-            Ldice = Random().nextInt(6) + 1;
-            Rdice = Random().nextInt(6) + 1;
-          });
-        },
+        onPressed: _rollDice
         icon: Icon(Icons.play_arrow),
         label: Text('Tap Here To Play',style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),),
         backgroundColor: Colors.black54,
